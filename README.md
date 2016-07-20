@@ -31,5 +31,27 @@ Android Note <br>
 
         String t1 = "test";
     }
-    
-<br>
+04 : 位运算符的一些理解 
+
+    public static final int STATUS = 1;
+
+    public static final int RED = STATUS << 1;
+
+    public static final int YELLOW = STATUS << 2;
+
+    public static final int BLUE = STATUS << 3;
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        int temp = 0;
+        //write
+        temp |= RED;
+        temp |= YELLOW;
+        temp |= BLUE;
+        System.out.println(Integer.toBinaryString(temp));
+        //contain
+        System.out.println((temp & YELLOW) == YELLOW ? "contain" : "no");
+        //remove
+        temp &= ~YELLOW;
+        System.out.println((temp & YELLOW) == YELLOW ? "contain" : "no");
+    }
