@@ -3,6 +3,16 @@
 Common Note <br>
 01 : resume-http://deercv.com/ <br>
 
+Git Note <br>
+01 git checkout -b “name” 创建一个新的分支 <br>
+02 git branch --set-upstream-to=origin/master “branch” 本地分支与远程关联 <br>
+03 (checkout master) (git merge xxx) xxx分支合并到master分支  <br>
+04 (git rebase -i head~*)(press insert) (edit squash) (:wq) 合并两个提交  <br>
+05 git branch -a 获取所有的分支 <br>
+06 git remote add origin git@github... 本地项目与远程关联 <br>
+
+RX Note <br>
+
 Android Note <br>
 01 : textview 设置距离顶部 5dp 那真实的字距离顶部的距离等于5dp吗 ？ （不等于 textview 有内边距） <br>
 02 : 如果一个手机StatusBar 那么通过 DisplayMetrics 获取到的全屏高度 是否包含 StatusBar 的高度 （包含）<br>
@@ -55,10 +65,4 @@ Android Note <br>
         temp &= ~YELLOW;
         System.out.println((temp & YELLOW) == YELLOW ? "contain" : "no");
     }
-Git Note <br>
-01 git checkout -b “name” 创建一个新的分支
-02 git branch --set-upstream-to=origin/master “branch” 本地分支与远程关联
-03 (checkout master) (git merge xxx) xxx分支合并到master分支 
-04 (git rebase -i head~*)(press insert) (edit squash) (:wq) 合并两个提交 
-05 git branch -a 获取所有的分支 
-06 git remote add origin git@github... 本地项目与远程关联
+
