@@ -55,3 +55,10 @@ Android Note <br>
         temp &= ~YELLOW;
         System.out.println((temp & YELLOW) == YELLOW ? "contain" : "no");
     }
+Git Note <br>
+01 git checkout -b “name” 创建一个新的分支
+02 git branch --set-upstream-to=origin/master “branch” 本地分支与远程关联
+03 (checkout master) (git merge xxx) xxx分支合并到master分支 
+04 (git rebase -i head~*)(press insert) (edit squash) (:wq) 合并两个提交 
+05 git branch -a 获取所有的分支 
+06 git remote add origin git@github... 本地项目与远程关联
