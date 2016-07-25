@@ -67,3 +67,4 @@ Android Note <br>
         System.out.println((temp & YELLOW) == YELLOW ? "contain" : "no");
     }
 
+05 android:clipChildren(是否限制子View在其范围内) 默认为true <br> 
