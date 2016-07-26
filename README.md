@@ -68,3 +68,6 @@ Android Note <br>
     }
 
 05 : android:clipChildren(是否限制子View在其范围内) 默认为true <br> 
+06 : 5.0 通知要求Product icons are 48dp, with 1dp edges System icons are 24dp 白色icon 透明背景 <br>
+
+
