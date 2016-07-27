@@ -158,6 +158,16 @@ Android Note <br>
             }
         });
     }
-    
+08 String.format 
+
+        //%index$ index 代表第几个参数
+        System.out.println(String.format("%1$,09d", -3123, 1234));
+        System.out.println(String.format("%2$,09d", -3123, 1234));
+        //09d 9 表示几位数
+        System.out.println(String.format("%1$,09d", -3123, 1234));
+        System.out.println(String.format("%1$,07d", -3123, 1234));
+        //,表示 三位是否用,分割
+        System.out.println(String.format("%1$,09d", -3123, 1234));
+        System.out.println(String.format("%1$09d", -3123, 1234));
 
 
