@@ -69,5 +69,92 @@ Android Note <br>
 
 05 : android:clipChildren(是否限制子View在其范围内) 默认为true <br> 
 06 : 5.0 通知要求Product icons are 48dp, with 1dp edges System icons are 24dp 白色icon 透明背景 <br>
+07 : java 动态代理研究
+
+    public class AsyncProxy implements InvocationHandler {
+    private Object mObject;
+    private ExecutorService mThreadPool = Executors.newFixedThreadPool(4);
+
+    public AsyncProxy(Object obj) {
+        mObject = obj;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        if (method.getReturnType() == void.class) {
+            mThreadPool.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        method.invoke(mObject, args);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            return null;
+        } else {
+            throw new RuntimeException("The return type of proxy method must be void.");
+        }
+    }
+    public interface CallBack {
+        public void call(ITest test);
+    }
+    public interface ITest {
+
+    public void test1();
+
+    public void test2(CallBack callBack);
+    }
+    public class Test implements ITest {
+
+    private ITest test;
+
+    public Test() {
+        test = (ITest) Proxy.newProxyInstance(ITest.class.getClassLoader(),
+                new Class<?>[] {
+                    ITest.class
+                }, new AsyncProxy(this));
+    }
+
+    public ITest async() {
+        return test;
+    }
+
+    @Override
+    public void test1() {
+        // TODO Auto-generated method stub
+        System.out.println("test1()@ThreadId=" + Thread.currentThread().getId());
+    }
+
+    @Override
+    public void test2(CallBack callBack) {
+        // TODO Auto-generated method stub
+        System.out.println("test2()@ThreadId=" + Thread.currentThread().getId());
+        callBack.call(this);
+    }
+    }
+    public class Main {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Test test = new Test();
+        test.test1();
+        test.async().test1();
+        test.async().test2(new CallBack() {
+
+            @Override
+            public void call(ITest test) {
+                // TODO Auto-generated method stub
+                test.test1();
+            }
+        });
+    }
+    }
+}
 
 
