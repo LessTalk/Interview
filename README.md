@@ -70,6 +70,7 @@ Android Note <br>
 05 : android:clipChildren(是否限制子View在其范围内) 默认为true <br> 
 06 : 5.0 通知要求Product icons are 48dp, with 1dp edges System icons are 24dp 白色icon 透明背景 <br>
 07 : java 动态代理研究
+========================================================================================================
 
     public class AsyncProxy implements InvocationHandler {
     private Object mObject;
@@ -101,15 +102,18 @@ Android Note <br>
             throw new RuntimeException("The return type of proxy method must be void.");
         }
     }
+    ========================================================================================================
     public interface CallBack {
         public void call(ITest test);
     }
+    ========================================================================================================
     public interface ITest {
 
     public void test1();
 
     public void test2(CallBack callBack);
     }
+    ========================================================================================================
     public class Test implements ITest {
 
     private ITest test;
@@ -138,6 +142,7 @@ Android Note <br>
         callBack.call(this);
     }
     }
+    ========================================================================================================
     public class Main {
 
     public static void main(String[] args) {
@@ -154,7 +159,6 @@ Android Note <br>
             }
         });
     }
-    }
-}
+    
 
 
