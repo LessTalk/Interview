@@ -173,5 +173,5 @@ Android Note <br>
     System.out.println(String.format("%1$09d", -3123, 1234));
 
 09 ViewCompat.postInvalidateOnAnimation(this); 会在下一帧 进行一些初始化操作 <br>
-08 TextView 宽度 textView.measure(0, 0); textView.getMeasuredWidth(); <br>
+10 TextView 宽度 textView.measure(0, 0); textView.getMeasuredWidth(); <br>
 
