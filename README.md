@@ -18,6 +18,8 @@ Plugin Note <br>
 02 ParcelableGenerator open bean 右键 generate -Parcelable 自动生成序列化 <br>
 03 SelectorChapek 自动生成selector 图片 <br>
 04 ButterKnife Zelezny 选中R.layout.xx 右键 自动生成代码 <br>
+05 Android File Grouping 右键 layout 第一个Group Layout自动分组插件 <br>
+
 RX Note <br>
 01 Observable(被观察者) Observer(观察者) subscribe(订阅)<br>
 
