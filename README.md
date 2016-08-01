@@ -27,6 +27,8 @@ Keymap Note(为了保证统一 window mac 均采用eclipse命名方式)<br>
 04 ctrl + 0 打开outline <br>
 05 alt + shift + r 重命名 <br>
 06 ctrl + d 删除当前行 <br>
+07 ctrl + g 项目中的引用 <br>
+08 ctrl + shift + g 当前类中的引用 <br>
 
 RX Note <br>
 01 Observable(被观察者) Observer(观察者) subscribe(订阅)<br>
