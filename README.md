@@ -192,4 +192,41 @@ Android Note <br>
 
 09 ViewCompat.postInvalidateOnAnimation(this); 会在下一帧 进行一些初始化操作 <br>
 10 TextView 宽度 textView.measure(0, 0); textView.getMeasuredWidth(); <br>
+11 java反射机制 <br>
+
+    public class Hi {
+    private void hello() {
+        System.out.println("hello");
+    }
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        try {
+            Class cls = Class.forName("Hi");
+            Method m = cls.getDeclaredMethod("hello", new Class[] {});
+            m.setAccessible(true);
+            m.invoke(cls.newInstance());
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+}
 
