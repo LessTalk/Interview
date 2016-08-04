@@ -13,6 +13,9 @@ Git Note <br>
 
 Fiddler Note<br>
 
+Mac KeyMap Note <br>
+01  command + shift + g  打开指定目录<br>
+
 Plugin Note <br>
 01 JSONOnlineViewer View-JSONOnlineViewer 测试接口的插件<br>
 02 ParcelableGenerator open bean 右键 generate -Parcelable 自动生成序列化 <br>
