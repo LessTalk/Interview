@@ -18,6 +18,7 @@ English Note <br>
 02 Tint 着色 <br>
 03 Wrapper 包装 <br>
 04 Apply 申请 应用 <br>
+05 Layer 层 <br>
 
 Mac KeyMap Note <br>
 01  command + shift + g  打开指定目录<br>
