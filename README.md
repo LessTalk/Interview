@@ -13,6 +13,9 @@ Git Note <br>
 
 Fiddler Note<br>
 
+English Note <br>
+01 Gradient 坡度 <br>
+
 Mac KeyMap Note <br>
 01  command + shift + g  打开指定目录<br>
 
