@@ -41,6 +41,7 @@ Keymap Note(为了保证统一 window mac 均采用eclipse命名方式)<br>
 08 ctrl + shift + g 当前类中的引用 <br>
 09 ctrl + alt + l 格式化 <br>
 10 ctrl + alt + o 删除无效的包 <br>
+11 shift + F9 <br>
 
 RX Note <br>
 01 Observable(被观察者) Observer(观察者) subscribe(订阅)<br>
