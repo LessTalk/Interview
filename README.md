@@ -10,6 +10,8 @@ Git Note <br>
 04 (git rebase -i head~*)(press insert) (edit squash) (:wq) 合并两个提交  <br>
 05 git branch -a 获取所有的分支 <br>
 06 git remote add origin git@github... 本地项目与远程关联 <br>
+07 git diff --name-status new_commit_id old_commit_id git diff --name-status fff783f81f7559cd14a42a2ef6992142c2cbd3d5 ba5e6566f2472
+   5eff1cb35ae2f1c7c3355fb9146 >d:\change.log 获取两个tag 之间的diff <br> 
 
 Fiddler Note<br>
 
