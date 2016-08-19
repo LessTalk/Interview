@@ -32,6 +32,9 @@ Plugin Note <br>
 04 ButterKnife Zelezny 选中R.layout.xx 右键 自动生成代码 <br>
 05 Android File Grouping 右键 layout 第一个Group Layout自动分组插件 <br>
 
+Android Studio Note <br>
+01 File - Setting - Appearance - System Setting - Http Proxy 设置代理 <br>
+
 Keymap Note(为了保证统一 window mac 均采用eclipse命名方式)<br>
 01 ctrl + shift + r 打开新的类 <br>
 02 ctrl + h 搜索 <br>
