@@ -247,5 +247,9 @@ Android Note <br>
             e.printStackTrace();
         }
     }
+    
+   
+12 sin 对边/斜边  cos 临边/斜边 <br>
+
 
 
