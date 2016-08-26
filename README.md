@@ -250,6 +250,8 @@ Android Note <br>
     
    
 12 sin 对边/斜边  cos 临边/斜边 <br>
+13 view.getTranslationX计算的是该view的偏移量。初始值为0，向左偏移值为负，向右偏移值为正 <br>
+14 view.getX相当于该view距离父容器左边缘的距离，等于getLeft+getTranslationX <br>
 
 
 
