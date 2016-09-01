@@ -263,7 +263,6 @@ Android Note <br>
       A.B ab = a.new B(); 
       
 16 Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. ? <br>
-      
    File > Settings > Compiler (Gradle-based Android Project) --info <br>
   
 
