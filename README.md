@@ -52,6 +52,7 @@ Keymap Note(为了保证统一 window mac 均采用eclipse命名方式)<br>
 
 RX Note <br>
 01 Observable(被观察者) Observer(观察者) subscribe(订阅)<br>
+02 Observable.timer(time, TimeUnit.MILLISECONDS).subscribe(action1); 延迟 <br>
 
 Android Note <br>
 01 : textview 设置距离顶部 5dp 那真实的字距离顶部的距离等于5dp吗 ？ （不等于 textview 有内边距） <br>
