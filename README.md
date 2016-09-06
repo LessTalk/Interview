@@ -3,6 +3,8 @@
 Common Note <br>
 01 : resume-http://deercv.com/ <br>
 
+Python Note <br>
+
 Git Note <br>
 01 git checkout -b “name” 创建一个新的分支 <br>
 02 git branch --set-upstream-to=origin/master “branch” 本地分支与远程关联 <br>
