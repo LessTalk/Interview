@@ -14,6 +14,7 @@ Git Note <br>
    5eff1cb35ae2f1c7c3355fb9146 >d:\change.log 获取两个tag 之间的diff <br> 
 08 git open .git/info/exclude 目录 写上想忽略的路径 <br>
 09 git update-index --assume-unchanged PATH 忽略已经提交到服务端的类 <br>
+10 git stash list   git stash apply stash@{2}  找回stash的代码 <br>
 
 Fiddler Note<br>
 
