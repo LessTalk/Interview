@@ -287,6 +287,8 @@ Android Note <br>
             }
         }
     }
+
+18 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left); 在子线程不工作 <br>
   
 
 
