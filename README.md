@@ -17,6 +17,12 @@ Git Note <br>
 08 git open .git/info/exclude 目录 写上想忽略的路径 <br>
 09 git update-index --assume-unchanged PATH 忽略已经提交到服务端的类 <br>
 10 git stash list   git stash apply stash@{2}  找回stash的代码 <br>
+11 (1)gitk 右键<br>
+   (2)git push origin --tags <br> 
+   (3)gitk 复制 SHA1 <br>
+   (4)git diff --name-status new_commit_id old_commit_id<br>
+   (5)$ git diff --name-status fff783f81f7559cd14a42a2ef6992142c2cbd3d5 ba5e6566f2472
+      5eff1cb35ae2f1c7c3355fb9146 >d:\change.log <br>
 
 Fiddler Note<br>
 
