@@ -23,6 +23,7 @@ Git Note <br>
    (4)git diff --name-status new_commit_id old_commit_id<br>
    (5)$ git diff --name-status fff783f81f7559cd14a42a2ef6992142c2cbd3d5 ba5e6566f2472
       5eff1cb35ae2f1c7c3355fb9146 >d:\change.log <br>
+12 git push origin 本地分支:远程分支  本地分支提交到另一个远程分支 <br>
 
 Fiddler Note<br>
 
