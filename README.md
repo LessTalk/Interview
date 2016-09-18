@@ -296,6 +296,7 @@ Android Note <br>
     }
 
 18 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left); 在子线程不工作 <br>
+19 apply vs commit 对提交结果不关心建议使用apply(原子操作 之后会异步提交) 必须是同步建议commit <br>
   
 
 
