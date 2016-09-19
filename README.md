@@ -24,6 +24,7 @@ Git Note <br>
    (5)$ git diff --name-status fff783f81f7559cd14a42a2ef6992142c2cbd3d5 ba5e6566f2472
       5eff1cb35ae2f1c7c3355fb9146 >d:\change.log <br>
 12 git push origin 本地分支:远程分支  本地分支提交到另一个远程分支 <br>
+13 git branch <新分支名称> git push origin <新分支名称>  git branch -av (查看远程分支) <br>
 
 Fiddler Note<br>
 
