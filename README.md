@@ -303,23 +303,24 @@ Android Note <br>
 18 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left); 在子线程不工作 <br>
 19 apply vs commit 对提交结果不关心建议使用apply(原子操作 之后会异步提交) 必须是同步建议commit <br>
 20 java 泛型类 <br>
-   public abstract class NetHelper<T> {
-    
-     protected Retrofit mRetrofit;
+   
 
-      protected NetHelper(String basrUrl){
+    public abstract class NetHelper<T> {
+
+    protected Retrofit mRetrofit;
+
+    protected NetHelper(String basrUrl){
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(5, TimeUnit.SECONDS);
         mRetrofit = new Retrofit.Builder().client(builder.build()).addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(basrUrl).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
-     }
+    }
 
-      protected void send(Observable<T> observable, Observer<T> observer){
+    protected void send(Observable<T> observable, Observer<T> observer){
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
-     }
-    
-  }
+    }
+    }
 
 
 
