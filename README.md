@@ -321,6 +321,41 @@ Android Note <br>
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
     }
     }
+    
+21 java HashMap 遍历 <br>
+
+        HashMap<String, String> testMap = new HashMap<String, String>();
+        long maxValue = 1234567;
+
+        for (int i = 0; i < maxValue; i++) {
+            testMap.put(String.valueOf(i), "hello:" + i);
+
+        }
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                long l1 = System.currentTimeMillis();
+                for (Map.Entry<String, String> entry : testMap.entrySet()) {
+                    String value = entry.getValue();
+                }
+                System.out.println("time1:" + (System.currentTimeMillis() - l1));
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                long l2 = System.currentTimeMillis();
+                for (String key : testMap.keySet()) {
+                    String value = testMap.get(key);
+                }
+                System.out.println("time2:" + (System.currentTimeMillis() - l2));
+            }
+        }).start();
 
 
 
