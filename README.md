@@ -54,6 +54,22 @@ Android Studio Note <br>
 01 File - Setting - Appearance - System Setting - Http Proxy 设置代理 <br>
 02 Android Studio之导出JavaDoc出现编码GBK的不可映射字符  在Other command line arguments 添加 -encoding utf-8 -charset utf-8 <br>
 03 Error Loading Project: Cannot load 3 facets Details...  File -> Settings - > Plugins -> Enable "Android Support" Plugin. <br>
+04 Duplicate files copied in APK META-INF/LICENSE.txt <br>
+       
+    android {  
+    
+    packagingOptions {  
+        exclude 'META-INF/DEPENDENCIES.txt'  
+        exclude 'META-INF/LICENSE.txt'  
+        exclude 'META-INF/NOTICE.txt'  
+        exclude 'META-INF/NOTICE'  
+        exclude 'META-INF/LICENSE'  
+        exclude 'META-INF/DEPENDENCIES'  
+        exclude 'META-INF/notice.txt'  
+        exclude 'META-INF/license.txt'  
+        exclude 'META-INF/dependencies.txt'  
+        exclude 'META-INF/LGPL2.1'  
+    }  
 
 Keymap Note(为了保证统一 window mac 均采用eclipse命名方式)<br>
 01 ctrl + shift + r 打开新的类 <br>
