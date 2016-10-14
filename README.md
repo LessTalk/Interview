@@ -70,6 +70,7 @@ Android Studio Note <br>
         exclude 'META-INF/dependencies.txt'  
         exclude 'META-INF/LGPL2.1'  
     }  
+05 ctrl F 批量替换 <br>
 
 Keymap Note(为了保证统一 window mac 均采用eclipse命名方式)<br>
 01 ctrl + shift + r 打开新的类 <br>
