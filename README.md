@@ -377,5 +377,31 @@ Android Note <br>
             }
         }).start();
 
+22 java super 默认构造函数 不写super同样会执行默认构造函数 <br>
+   
+   
+     public class SuperTest {
+     
+     public SuperTest(){
+        System.out.print("SuperTest");
+     }
+    
+     public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+     }
+      
+    public class ChildTest extends SuperTest{
+    
+    private ChildTest(){
+        System.out.print("ChildTest");
+    }
+     
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        new ChildTest();
+    }
+   
+}
 
 
