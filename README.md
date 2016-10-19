@@ -5,6 +5,10 @@ Common Note <br>
 
 Python Note <br>
 
+ProGuard Note <br>
+01 代码混淆压缩比，在0~7之间，默认为5,一般不下需要修改 -optimizationpasses 5 <br>
+02 Android不需要preverify，去掉这一步可以加快混淆速度 -dontpreverify <br>
+
 Git Note <br>
 01 git checkout -b “name” 创建一个新的分支 <br>
 02 git branch --set-upstream-to=origin/master “branch” 本地分支与远程关联 <br>
