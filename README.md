@@ -405,6 +405,6 @@ Android Note <br>
         // TODO Auto-generated method stub
         new ChildTest();
     }
-   
+23 singleTask模式的Activity不管是位于栈顶还是栈底，再次运行这个Activity时，都会destory掉它上面的Activity来保证整个栈中只有一个自己 <br>
 
 
