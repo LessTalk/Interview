@@ -97,7 +97,7 @@ RX Note <br>
 Android Note <br>
 01 : textview 设置距离顶部 5dp 那真实的字距离顶部的距离等于5dp吗 ？ （不等于 textview 有内边距） <br>
 02 : 如果一个手机StatusBar 那么通过 DisplayMetrics 获取到的全屏高度 是否包含 StatusBar 的高度 （包含）<br>
-03 :  如下 第一个 print 和第二个 的结果分别是什么 (test transform2 ) 
+03 :  如下 第一个 print 和第二个 的结果分别是什么 (test transform2 ) <br>
 
     public static void main(String[] args) {
         Test test = new Test();
@@ -122,6 +122,9 @@ Android Note <br>
 
         String t1 = "test";
     }
+    //基本类型作为参数传递时，是传递值的拷贝，无论你怎么改变这个拷贝，原值是不会改变的
+    
+    
 04 : 位运算符的一些理解 
 
     public static final int STATUS = 1;
