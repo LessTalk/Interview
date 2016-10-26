@@ -32,6 +32,7 @@ Git Note <br>
 14 git checkout master git merge as_master  将as_master分支合并到主分支 <br>
 
 Fiddler Note<br>
+01 添加Server Ip  FiddlerObject.UI.lvSessions.AddBoundColumn("IP", 50, "x-hostip");  <br>
 
 KeyStore <br>
 01 cd C:\Program Files\Java\jdk1.7.0_01\bin <br>
