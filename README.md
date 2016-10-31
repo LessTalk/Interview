@@ -44,6 +44,7 @@ English Note <br>
 03 Wrapper 包装 <br>
 04 Apply 申请 应用 <br>
 05 Layer 层 <br>
+06 Indicates 指出 <br>
 
 Mac KeyMap Note <br>
 01  command + shift + g  打开指定目录<br>
