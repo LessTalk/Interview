@@ -429,8 +429,18 @@ Android Note <br>
      打印结果是onNext 4,5,6
 27 combineLatest是RxJava本身提供的一个常用的操作符，它接受两个或以上的Observable和一个FuncX闭包。当传入的Observable中任意的一个发射数据时，        combineLatest将每个Observable的最近值(Lastest)联合起来（combine）传给FuncX闭包进行处理。要点在于 <br>
    <1> combineLatest是会存储每个Observable的最近的值的 <br>
-   <2> 任意一个Observable发射新值时都会触发操作->“combine all the Observable's lastest value together and send to Function” <br>
+   <2> 任意一个Observable发射新值时都会触发操作-><br>
    用combineLatest处理表单验证 首先我们写上email和password的验证方法，一个需要含有@字符，一个要求字符数超过4个 <br>
-      
+     
+    private boolean isEmailValid(String email) {
+        //TODO: Replace this with your own logic
+        return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+    //TODO: Replace this with your own logic
+    return password.length() > 4;
+    }
+   
     
 
