@@ -411,5 +411,8 @@ Android Note <br>
         new ChildTest();
     }
 23 singleTask模式的Activity不管是位于栈顶还是栈底，再次运行这个Activity时，都会destory掉它上面的Activity来保证整个栈中只有一个自己 <br>
+24 ArrayList和LinkedList的区别 <br>
+   1当随机访问List时（get和set操作），ArrayList比LinkedList的效率更高 <br>
+   2当对数据进行增加和删除的操作时(add和remove操作)，LinkedList比ArrayList的效率更高 <br>
 
 
