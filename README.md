@@ -412,7 +412,7 @@ Android Note <br>
    2LinkedList 是链性表 分散式存储, 每个元素都会记录下一个元素的位置,查找的值需要挨个遍历<br>
 
 25 Observable.timer(time, TimeUnit.MILLISECONDS).subscribe(action1); 延迟 <br>
-06 Amb操作符可以将至多9个Observable结合起来，让他们竞争。哪个Observable首先发射了数据（包括onError和onComplete)就会继续发射这个Observable的数      据，其他的Observable所发射的数据都会被丢弃 <br>
+26 Amb操作符可以将至多9个Observable结合起来，让他们竞争。哪个Observable首先发射了数据（包括onError和onComplete)就会继续发射这个Observable的数      据，其他的Observable所发射的数据都会被丢弃 <br>
 
     Observable<Integer> observable1 = Observable.just(1,2,3).delay(3000,TimeUnit.MILLISECONDS);
     Observable<Integer> observable2 = Observable.just(4,5,6).delay(1000,TimeUnit.MILLISECONDS);
@@ -427,4 +427,10 @@ Android Note <br>
         });
         
      打印结果是onNext 4,5,6
+27 combineLatest是RxJava本身提供的一个常用的操作符，它接受两个或以上的Observable和一个FuncX闭包。当传入的Observable中任意的一个发射数据时，        combineLatest将每个Observable的最近值(Lastest)联合起来（combine）传给FuncX闭包进行处理。要点在于 <br>
+   <1> combineLatest是会存储每个Observable的最近的值的 <br>
+   <2> 任意一个Observable发射新值时都会触发操作->“combine all the Observable's lastest value together and send to Function” <br>
+   用combineLatest处理表单验证 首先我们写上email和password的验证方法，一个需要含有@字符，一个要求字符数超过4个 <br>
+      
+    
 
