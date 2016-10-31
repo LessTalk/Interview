@@ -442,5 +442,81 @@ Android Note <br>
     return password.length() > 4;
     }
    
+   随后，我们针对email和password分别创建Observable，发射的值即为各自edittext的变化的内容，
+   而call回调方法的返回值是textWatcher中afterTextChanged   方法的传入参数： <br>
     
+    
+      Observable<String> ObservableEmail = Observable.create(new Observable.OnSubscribe<String>() {
+
+            @Override
+            public void call(final Subscriber<? super String> subscriber) {
+                mEmailView.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        subscriber.onNext(s.toString());
+                    }
+                });
+            }
+        });
+
+    Observable<String> ObservablePassword = Observable.create(new Observable.OnSubscribe<String>() {
+
+      @Override
+      public void call(final Subscriber<? super String> subscriber) {
+        mPasswordView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                subscriber.onNext(s.toString());
+            }
+        });
+      }
+    });
+   最后，用combineLastest将ObservableEmail和ObservablePassword联合起来进行验证：<br>
+
+      Observable.combineLatest(ObservableEmail, ObservablePassword, new Func2<String, String, Boolean>() {
+            @Override
+            public Boolean call(String email, String password) {
+                return isEmailValid(email) && isPasswordValid(password);
+            }
+        }).subscribe(new Subscriber<Boolean>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Boolean verify) {
+                if (verify) {
+                    mEmailSignInButton.setEnabled(true);
+                } else {
+                    mEmailSignInButton.setEnabled(false);
+                }
+            }
+        });
+
 
