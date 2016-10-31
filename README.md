@@ -94,7 +94,21 @@ Keymap Note(为了保证统一 window mac 均采用eclipse命名方式)<br>
 RX Note <br>
 01 Observable(被观察者) Observer(观察者) subscribe(订阅)<br>
 02 Observable.timer(time, TimeUnit.MILLISECONDS).subscribe(action1); 延迟 <br>
+03 Amb操作符可以将至多9个Observable结合起来，让他们竞争。哪个Observable首先发射了数据（包括onError和onComplete)就会继续发射这个Observable的数      据，其他的Observable所发射的数据都会被丢弃 <br>
 
+    Observable<Integer> observable1 = Observable.just(1,2,3).delay(3000,TimeUnit.MILLISECONDS);
+    Observable<Integer> observable2 = Observable.just(4,5,6).delay(1000,TimeUnit.MILLISECONDS);
+    Observable<Integer> observable3 = Observable.just(7,8,9).delay(2000,TimeUnit.MILLISECONDS);
+    Observable.amb(observable1,observable2,observable3)
+        .subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                Log.d(TAG,"onNext" + integer);
+
+            }
+        });
+     打印结果是onNext 4,5,6
+        
 Android Note <br>
 01 : textview 设置距离顶部 5dp 那真实的字距离顶部的距离等于5dp吗 ？ （不等于 textview 有内边距） <br>
 02 : 如果一个手机StatusBar 那么通过 DisplayMetrics 获取到的全屏高度 是否包含 StatusBar 的高度 （包含）<br>
