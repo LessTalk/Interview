@@ -1,13 +1,2 @@
-
-Keymap Note(为了保证统一 window mac 均采用eclipse命名方式)
-01 ctrl + shift + r 打开新的类 
-02 ctrl + h 搜索 
-03 ctrl + l 跳转到line 
-04 ctrl + 0 打开outline 
-05 alt + shift + r 重命名 
-06 ctrl + d 删除当前行 
-07 ctrl + g 项目中的引用 
-08 ctrl + shift + g 当前类中的引用 
-09 ctrl + alt + l 格式化 
-10 ctrl + alt + o 删除无效的包 
-11 shift + F9 
+Mac KeyMap Note 
+01 command + shift + g 打开指定目录
