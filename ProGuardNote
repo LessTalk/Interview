@@ -1,1 +1,4 @@
 
+ProGuard Note 
+01 代码混淆压缩比，在0~7之间，默认为5,一般不下需要修改 -optimizationpasses 5 
+02 Android不需要preverify，去掉这一步可以加快混淆速度 -dontpreverify 
