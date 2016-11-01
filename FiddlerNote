@@ -1,1 +1,3 @@
 
+Fiddler Note
+01 添加Server Ip FiddlerObject.UI.lvSessions.AddBoundColumn("IP", 50, "x-hostip"); 
