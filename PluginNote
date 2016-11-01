@@ -1,1 +1,7 @@
 
+Plugin Note 
+01 JSONOnlineViewer View-JSONOnlineViewer 测试接口的插件
+02 ParcelableGenerator open bean 右键 generate -Parcelable 自动生成序列化 
+03 SelectorChapek 自动生成selector 图片 
+04 ButterKnife Zelezny 选中R.layout.xx 右键 自动生成代码 
+05 Android File Grouping 右键 layout 第一个Group Layout自动分组插件 
