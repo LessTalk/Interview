@@ -15,6 +15,9 @@ https://github.com/LessTalk/Note/blob/master/GitNode <br>
 FiddlerNote <br>
 https://github.com/LessTalk/Note/blob/master/FiddlerNote <br>
 
+EnglishNode <br>
+https://github.com/LessTalk/Note/blob/master/EnglishNote <br>
+
 
 
 
