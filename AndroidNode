@@ -147,7 +147,7 @@ Android Note <br>
         });
     }
 08 String.format 
-
+```java
     //%index$ index 代表第几个参数
     System.out.println(String.format("%1$,09d", -3123, 1234));
     System.out.println(String.format("%2$,09d", -3123, 1234));
@@ -157,7 +157,8 @@ Android Note <br>
     //,表示 三位是否用,分割
     System.out.println(String.format("%1$,09d", -3123, 1234));
     System.out.println(String.format("%1$09d", -3123, 1234));
-
+    // %1$s 格式化String
+```
 09 ViewCompat.postInvalidateOnAnimation(this); 会在下一帧 进行一些初始化操作 <br>
 10 TextView 宽度 textView.measure(0, 0); textView.getMeasuredWidth(); <br>
 11 java反射机制 <br>
