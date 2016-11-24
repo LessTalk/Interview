@@ -21,3 +21,4 @@ packagingOptions {
 }
 
 05 批量改变 方法参数位置 参数命名 添加 删除参数  选中参数 右键 Refactor - ChangeSignature
+06 git 拉去别人代码的时候  需要手动刷新一下(Sync Progress with Gradle File)
