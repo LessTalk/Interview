@@ -327,4 +327,5 @@ Android Note <br>
    5 关于中括号的问题用 sring.split("\\[\\]")解决 <br>
    
 26 Android Button 5.0 之后英文默认大写  需要添加 android:textAllCaps="false" <br>
-   
+27 Android View Lifecircle <br>
+<img src="https://github.com/LessTalk/TabSupport/blob/master/library/src/main/res/img/DEFAULT.png" width="700" height="100" /> <br>
