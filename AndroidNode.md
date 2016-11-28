@@ -328,4 +328,4 @@
    
 26 Android Button 5.0 之后英文默认大写  需要添加 android:textAllCaps="false" <br>
 27 Android View Lifecircle <br>
-<img src="https://github.com/LessTalk/TabSupport/blob/master/library/src/main/res/img/DEFAULT.png" width="700" height="100" /> <br>
+<img src="https://github.com/LessTalk/Note/blob/master/android_view.png" width="700" height="400" /> <br>
