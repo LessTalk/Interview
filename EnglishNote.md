@@ -1,5 +1,5 @@
 
-English Note 
+English Note <br>
 01 Gradient 坡度 <br>
 02 Tint 着色 <br>
 03 Wrapper 包装 <br>
