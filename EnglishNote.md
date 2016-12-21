@@ -8,3 +8,5 @@ English Note
 06 Indicates 指出 <br>
 07 Concurrent 同时,并发 <br>
 08 Segment 片段 <br>
+09 distinct 不同 <br>
+10 debounce 去抖 <br>
