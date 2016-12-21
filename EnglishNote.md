@@ -6,4 +6,5 @@ English Note
 04 Apply 申请 应用 <br>
 05 Layer 层 <br>
 06 Indicates 指出 <br>
-07 Concurrent 同时,并发
+07 Concurrent 同时,并发 <br>
+08 Segment 片段 <br>
