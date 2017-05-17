@@ -17,6 +17,12 @@ page     代表参数的 Key <br>
 location 代表参数的 Value <br>
 S        代表参数的类型  <br>
 
+如果多个参数 用 | 区分 <br> 
+
+例如 page^location^S|page^location^S <br>
+
+flag 代表Intent需要添加的flag <br>
+
 参数类型对照表如下 <br>
 ```java
 B bundle.putBoolean(key, Boolean.parseBoolean(value)); <br>
