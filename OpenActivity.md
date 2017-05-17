@@ -18,7 +18,7 @@ location 代表参数的 Value <br>
 S        代表参数的类型  <br>
 
 参数类型对照表如下 <br>
-
+```java
 B bundle.putBoolean(key, Boolean.parseBoolean(value)); <br>
 S bundle.putString(key, Uri.decode(value)); <br>
 b bundle.putByte(key, Byte.parseByte(value));<br>
@@ -29,8 +29,23 @@ i bundle.putInt(key, Integer.parseInt(value));<br>
 l bundle.putLong(key, Long.parseLong(value));<br>
 s bundle.putShort(key, Short.parseShort(value));<br>
 
+```
 第二种 隐示启动  <br>
 ```java
-
+{
+    "name": "历史记录",
+    "type": "action",
+    "flag": "",
+    "activity_name": "",
+    "action_name": "com.bftv.fui.HistoryActivity"
+}
 ```
 第三种 发送广播启动 <br>
+```java
+{
+    "parameter": "persion_type^login^S",
+    "action_name": "com.baofengtv.voice.persion.action",
+    "flag": "0X00008000",
+    "type": "broadcast"
+}
+```
