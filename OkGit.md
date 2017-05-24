@@ -10,3 +10,10 @@ git 有一个缓存区 git add 就是将文件提交到缓存区 在这个缓存
 2. git status 查看当前add的文件 <br>
 3. git reset HEAD 上一次add的全部撤销 <br>
 4. git reset HEAD path(路径) 撤销某一个路径 <br>
+
+# 回滚 origin 
+
+```java
+git revert Head git push origin master
+```
+但是这样会产生新的提交记录
