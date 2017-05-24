@@ -14,6 +14,8 @@ git 有一个缓存区 git add 就是将文件提交到缓存区 在这个缓存
 # 回滚 origin 
 
 ```java
-git revert Head git push origin master
-```
+git revert Head 
+git push origin master
 但是这样会产生新的提交记录
+```
+
