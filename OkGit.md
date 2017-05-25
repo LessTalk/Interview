@@ -24,3 +24,13 @@ git reset HEAD~1
 git stash
 git push -f origin master
 ```
+
+# stash
+
+```java
+git stash #可用来暂存当前正在进行的工作
+git stash pop #从Git栈中读取最近一次保存的内容
+git stash list #显示Git栈内的所有备份
+git stash clear #清空Git栈
+git stash apply stash@{1} #可以将你指定版本号为stash@{1}的工作取出来
+```
