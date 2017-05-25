@@ -34,6 +34,11 @@ step2 检查SD卡 bftv_record 目录下面是否有 error.txt 和 hash.txt 文�
 step3 安装 log_collect.apk <br>
 
 step4 模拟发送广播 action = "com.bftv.fui.log.test" <br>
+```java
+Intent intent = new Intent("com.bftv.fui.log.test");
+        intent.addFlags(FLAG_INCLUDE_STOPPED_PACKAGES);
+        context.sendBroadcast(intent);
+```
 
 step5 检查SD卡 bftv_record 目录下 如果文件为空 代表上传成功 通知我 <br>
 
