@@ -34,3 +34,10 @@ git stash list #显示Git栈内的所有备份
 git stash clear #清空Git栈
 git stash apply stash@{1} #可以将你指定版本号为stash@{1}的工作取出来
 ```
+
+# config
+
+```java
+git config --global user.name "test"
+git config --global user.email test@gmail.com
+```
