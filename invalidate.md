@@ -460,5 +460,103 @@ View是否需要重绘，接着为该View设置标记位，然后把需要重绘
             scheduleTraversals();
         }
     }
+    
+    
+    private boolean drawSoftware(Surface surface, AttachInfo attachInfo, int xoff, int yoff,
+            boolean scalingRequired, Rect dirty) {
+
+        // Draw with software renderer.
+        final Canvas canvas;
+        try {
+            final int left = dirty.left;
+            final int top = dirty.top;
+            final int right = dirty.right;
+            final int bottom = dirty.bottom;
+
+            canvas = mSurface.lockCanvas(dirty);
+
+            // The dirty rectangle can be modified by Surface.lockCanvas()
+            //noinspection ConstantConditions
+            if (left != dirty.left || top != dirty.top || right != dirty.right
+                    || bottom != dirty.bottom) {
+                attachInfo.mIgnoreDirtyState = true;
+            }
+
+            // TODO: Do this in native
+            canvas.setDensity(mDensity);
+        } catch (Surface.OutOfResourcesException e) {
+            handleOutOfResourcesException(e);
+            return false;
+        } catch (IllegalArgumentException e) {
+            Log.e(mTag, "Could not lock surface", e);
+            // Don't assume this is due to out of memory, it could be
+            // something else, and if it is something else then we could
+            // kill stuff (or ourself) for no reason.
+            mLayoutRequested = true;    // ask wm for a new surface next time.
+            return false;
+        }
+
+        try {
+            if (DEBUG_ORIENTATION || DEBUG_DRAW) {
+                Log.v(mTag, "Surface " + surface + " drawing to bitmap w="
+                        + canvas.getWidth() + ", h=" + canvas.getHeight());
+                //canvas.drawARGB(255, 255, 0, 0);
+            }
+
+            // If this bitmap's format includes an alpha channel, we
+            // need to clear it before drawing so that the child will
+            // properly re-composite its drawing on a transparent
+            // background. This automatically respects the clip/dirty region
+            // or
+            // If we are applying an offset, we need to clear the area
+            // where the offset doesn't appear to avoid having garbage
+            // left in the blank areas.
+            if (!canvas.isOpaque() || yoff != 0 || xoff != 0) {
+                canvas.drawColor(0, PorterDuff.Mode.CLEAR);
+            }
+
+            dirty.setEmpty();
+            mIsAnimating = false;
+            mView.mPrivateFlags |= View.PFLAG_DRAWN;
+
+            if (DEBUG_DRAW) {
+                Context cxt = mView.getContext();
+                Log.i(mTag, "Drawing: package:" + cxt.getPackageName() +
+                        ", metrics=" + cxt.getResources().getDisplayMetrics() +
+                        ", compatibilityInfo=" + cxt.getResources().getCompatibilityInfo());
+            }
+            try {
+                canvas.translate(-xoff, -yoff);
+                if (mTranslator != null) {
+                    mTranslator.translateCanvas(canvas);
+                }
+                canvas.setScreenDensity(scalingRequired ? mNoncompatDensity : 0);
+                attachInfo.mSetIgnoreDirtyState = false;
+
+                mView.draw(canvas);
+
+                drawAccessibilityFocusedDrawableIfNeeded(canvas);
+            } finally {
+                if (!attachInfo.mSetIgnoreDirtyState) {
+                    // Only clear the flag if it was not set during the mView.draw() call
+                    attachInfo.mIgnoreDirtyState = false;
+                }
+            }
+        } finally {
+            try {
+                surface.unlockCanvasAndPost(canvas);
+            } catch (IllegalArgumentException e) {
+                Log.e(mTag, "Could not unlock surface", e);
+                mLayoutRequested = true;    // ask wm for a new surface next time.
+                //noinspection ReturnInsideFinallyBlock
+                return false;
+            }
+
+            if (LOCAL_LOGV) {
+                Log.v(mTag, "Surface " + surface + " unlockCanvasAndPost");
+            }
+        }
+        return true;
+    }
 ```
 
