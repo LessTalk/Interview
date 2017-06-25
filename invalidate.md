@@ -785,5 +785,33 @@ View是否需要重绘，接着为该View设置标记位，然后把需要重绘
             canvas.translate(-scrollX, -scrollY);
         }
     }
+    
+     public void onDrawForeground(Canvas canvas) {
+        onDrawScrollIndicators(canvas);
+        onDrawScrollBars(canvas);
+
+        final Drawable foreground = mForegroundInfo != null ? mForegroundInfo.mDrawable : null;
+        if (foreground != null) {
+            if (mForegroundInfo.mBoundsChanged) {
+                mForegroundInfo.mBoundsChanged = false;
+                final Rect selfBounds = mForegroundInfo.mSelfBounds;
+                final Rect overlayBounds = mForegroundInfo.mOverlayBounds;
+
+                if (mForegroundInfo.mInsidePadding) {
+                    selfBounds.set(0, 0, getWidth(), getHeight());
+                } else {
+                    selfBounds.set(getPaddingLeft(), getPaddingTop(),
+                            getWidth() - getPaddingRight(), getHeight() - getPaddingBottom());
+                }
+
+                final int ld = getLayoutDirection();
+                Gravity.apply(mForegroundInfo.mGravity, foreground.getIntrinsicWidth(),
+                        foreground.getIntrinsicHeight(), selfBounds, overlayBounds, ld);
+                foreground.setBounds(overlayBounds);
+            }
+
+            foreground.draw(canvas);
+        }
+    }
 ```
 
