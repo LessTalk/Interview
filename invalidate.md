@@ -284,5 +284,181 @@ View是否需要重绘，接着为该View设置标记位，然后把需要重绘
             }
         }
     }
+    
+    private void draw(boolean fullRedrawNeeded) {
+        Surface surface = mSurface;
+        if (!surface.isValid()) {
+            return;
+        }
+
+        if (DEBUG_FPS) {
+            trackFPS();
+        }
+
+        if (!sFirstDrawComplete) {
+            synchronized (sFirstDrawHandlers) {
+                sFirstDrawComplete = true;
+                final int count = sFirstDrawHandlers.size();
+                for (int i = 0; i< count; i++) {
+                    mHandler.post(sFirstDrawHandlers.get(i));
+                }
+            }
+        }
+
+        scrollToRectOrFocus(null, false);
+
+        if (mAttachInfo.mViewScrollChanged) {
+            mAttachInfo.mViewScrollChanged = false;
+            mAttachInfo.mTreeObserver.dispatchOnScrollChanged();
+        }
+
+        boolean animating = mScroller != null && mScroller.computeScrollOffset();
+        final int curScrollY;
+        if (animating) {
+            curScrollY = mScroller.getCurrY();
+        } else {
+            curScrollY = mScrollY;
+        }
+        if (mCurScrollY != curScrollY) {
+            mCurScrollY = curScrollY;
+            fullRedrawNeeded = true;
+            if (mView instanceof RootViewSurfaceTaker) {
+                ((RootViewSurfaceTaker) mView).onRootViewScrollYChanged(mCurScrollY);
+            }
+        }
+
+        final float appScale = mAttachInfo.mApplicationScale;
+        final boolean scalingRequired = mAttachInfo.mScalingRequired;
+
+        int resizeAlpha = 0;
+
+        final Rect dirty = mDirty;
+        if (mSurfaceHolder != null) {
+            // The app owns the surface, we won't draw.
+            dirty.setEmpty();
+            if (animating && mScroller != null) {
+                mScroller.abortAnimation();
+            }
+            return;
+        }
+
+        if (fullRedrawNeeded) {
+            mAttachInfo.mIgnoreDirtyState = true;
+            dirty.set(0, 0, (int) (mWidth * appScale + 0.5f), (int) (mHeight * appScale + 0.5f));
+        }
+
+        if (DEBUG_ORIENTATION || DEBUG_DRAW) {
+            Log.v(mTag, "Draw " + mView + "/"
+                    + mWindowAttributes.getTitle()
+                    + ": dirty={" + dirty.left + "," + dirty.top
+                    + "," + dirty.right + "," + dirty.bottom + "} surface="
+                    + surface + " surface.isValid()=" + surface.isValid() + ", appScale:" +
+                    appScale + ", width=" + mWidth + ", height=" + mHeight);
+        }
+
+        mAttachInfo.mTreeObserver.dispatchOnDraw();
+
+        int xOffset = -mCanvasOffsetX;
+        int yOffset = -mCanvasOffsetY + curScrollY;
+        final WindowManager.LayoutParams params = mWindowAttributes;
+        final Rect surfaceInsets = params != null ? params.surfaceInsets : null;
+        if (surfaceInsets != null) {
+            xOffset -= surfaceInsets.left;
+            yOffset -= surfaceInsets.top;
+
+            // Offset dirty rect for surface insets.
+            dirty.offset(surfaceInsets.left, surfaceInsets.right);
+        }
+
+        boolean accessibilityFocusDirty = false;
+        final Drawable drawable = mAttachInfo.mAccessibilityFocusDrawable;
+        if (drawable != null) {
+            final Rect bounds = mAttachInfo.mTmpInvalRect;
+            final boolean hasFocus = getAccessibilityFocusedRect(bounds);
+            if (!hasFocus) {
+                bounds.setEmpty();
+            }
+            if (!bounds.equals(drawable.getBounds())) {
+                accessibilityFocusDirty = true;
+            }
+        }
+
+        mAttachInfo.mDrawingTime =
+                mChoreographer.getFrameTimeNanos() / TimeUtils.NANOS_PER_MS;
+
+        if (!dirty.isEmpty() || mIsAnimating || accessibilityFocusDirty) {
+            if (mAttachInfo.mHardwareRenderer != null && mAttachInfo.mHardwareRenderer.isEnabled()) {
+                // If accessibility focus moved, always invalidate the root.
+                boolean invalidateRoot = accessibilityFocusDirty || mInvalidateRootRequested;
+                mInvalidateRootRequested = false;
+
+                // Draw with hardware renderer.
+                mIsAnimating = false;
+
+                if (mHardwareYOffset != yOffset || mHardwareXOffset != xOffset) {
+                    mHardwareYOffset = yOffset;
+                    mHardwareXOffset = xOffset;
+                    invalidateRoot = true;
+                }
+
+                if (invalidateRoot) {
+                    mAttachInfo.mHardwareRenderer.invalidateRoot();
+                }
+
+                dirty.setEmpty();
+
+                // Stage the content drawn size now. It will be transferred to the renderer
+                // shortly before the draw commands get send to the renderer.
+                final boolean updated = updateContentDrawBounds();
+
+                if (mReportNextDraw) {
+                    // report next draw overrides setStopped()
+                    // This value is re-sync'd to the value of mStopped
+                    // in the handling of mReportNextDraw post-draw.
+                    mAttachInfo.mHardwareRenderer.setStopped(false);
+                }
+
+                if (updated) {
+                    requestDrawWindow();
+                }
+
+                mAttachInfo.mHardwareRenderer.draw(mView, mAttachInfo, this);
+            } else {
+                // If we get here with a disabled & requested hardware renderer, something went
+                // wrong (an invalidate posted right before we destroyed the hardware surface
+                // for instance) so we should just bail out. Locking the surface with software
+                // rendering at this point would lock it forever and prevent hardware renderer
+                // from doing its job when it comes back.
+                // Before we request a new frame we must however attempt to reinitiliaze the
+                // hardware renderer if it's in requested state. This would happen after an
+                // eglTerminate() for instance.
+                if (mAttachInfo.mHardwareRenderer != null &&
+                        !mAttachInfo.mHardwareRenderer.isEnabled() &&
+                        mAttachInfo.mHardwareRenderer.isRequested()) {
+
+                    try {
+                        mAttachInfo.mHardwareRenderer.initializeIfNeeded(
+                                mWidth, mHeight, mAttachInfo, mSurface, surfaceInsets);
+                    } catch (OutOfResourcesException e) {
+                        handleOutOfResourcesException(e);
+                        return;
+                    }
+
+                    mFullRedrawNeeded = true;
+                    scheduleTraversals();
+                    return;
+                }
+
+                if (!drawSoftware(surface, mAttachInfo, xOffset, yOffset, scalingRequired, dirty)) {
+                    return;
+                }
+            }
+        }
+
+        if (animating) {
+            mFullRedrawNeeded = true;
+            scheduleTraversals();
+        }
+    }
 ```
 
