@@ -218,5 +218,71 @@ View是否需要重绘，接着为该View设置标记位，然后把需要重绘
             pokeDrawLockIfNeeded();
         }
     }
+    
+    private void performDraw() {
+        if (mAttachInfo.mDisplayState == Display.STATE_OFF && !mReportNextDraw) {
+            return;
+        }
+
+        final boolean fullRedrawNeeded = mFullRedrawNeeded;
+        mFullRedrawNeeded = false;
+
+        mIsDrawing = true;
+        Trace.traceBegin(Trace.TRACE_TAG_VIEW, "draw");
+        try {
+            draw(fullRedrawNeeded);
+        } finally {
+            mIsDrawing = false;
+            Trace.traceEnd(Trace.TRACE_TAG_VIEW);
+        }
+
+        // For whatever reason we didn't create a HardwareRenderer, end any
+        // hardware animations that are now dangling
+        if (mAttachInfo.mPendingAnimatingRenderNodes != null) {
+            final int count = mAttachInfo.mPendingAnimatingRenderNodes.size();
+            for (int i = 0; i < count; i++) {
+                mAttachInfo.mPendingAnimatingRenderNodes.get(i).endAllAnimators();
+            }
+            mAttachInfo.mPendingAnimatingRenderNodes.clear();
+        }
+
+        if (mReportNextDraw) {
+            mReportNextDraw = false;
+
+            // if we're using multi-thread renderer, wait for the window frame draws
+            if (mWindowDrawCountDown != null) {
+                try {
+                    mWindowDrawCountDown.await();
+                } catch (InterruptedException e) {
+                    Log.e(mTag, "Window redraw count down interruped!");
+                }
+                mWindowDrawCountDown = null;
+            }
+
+            if (mAttachInfo.mHardwareRenderer != null) {
+                mAttachInfo.mHardwareRenderer.fence();
+                mAttachInfo.mHardwareRenderer.setStopped(mStopped);
+            }
+
+            if (LOCAL_LOGV) {
+                Log.v(mTag, "FINISHED DRAWING: " + mWindowAttributes.getTitle());
+            }
+            if (mSurfaceHolder != null && mSurface.isValid()) {
+                mSurfaceHolderCallback.surfaceRedrawNeeded(mSurfaceHolder);
+                SurfaceHolder.Callback callbacks[] = mSurfaceHolder.getCallbacks();
+                if (callbacks != null) {
+                    for (SurfaceHolder.Callback c : callbacks) {
+                        if (c instanceof SurfaceHolder.Callback2) {
+                            ((SurfaceHolder.Callback2)c).surfaceRedrawNeeded(mSurfaceHolder);
+                        }
+                    }
+                }
+            }
+            try {
+                mWindowSession.finishDrawing(mWindow);
+            } catch (RemoteException e) {
+            }
+        }
+    }
 ```
 
