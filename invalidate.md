@@ -47,3 +47,106 @@ void invalidateInternal(int l, int t, int r, int b, boolean invalidateCache,
 ```
 View是否需要重绘，接着为该View设置标记位，然后把需要重绘的区域传递给父容器，即调用父容器的invalidateChild方法 <br>
 
+```java
+ @Override
+    public final void invalidateChild(View child, final Rect dirty) {
+        ViewParent parent = this;
+
+        final AttachInfo attachInfo = mAttachInfo;
+        if (attachInfo != null) {
+            // If the child is drawing an animation, we want to copy this flag onto
+            // ourselves and the parent to make sure the invalidate request goes
+            // through
+            final boolean drawAnimation = (child.mPrivateFlags & PFLAG_DRAW_ANIMATION)
+                    == PFLAG_DRAW_ANIMATION;
+
+            // Check whether the child that requests the invalidate is fully opaque
+            // Views being animated or transformed are not considered opaque because we may
+            // be invalidating their old position and need the parent to paint behind them.
+            Matrix childMatrix = child.getMatrix();
+            final boolean isOpaque = child.isOpaque() && !drawAnimation &&
+                    child.getAnimation() == null && childMatrix.isIdentity();
+            // Mark the child as dirty, using the appropriate flag
+            // Make sure we do not set both flags at the same time
+            int opaqueFlag = isOpaque ? PFLAG_DIRTY_OPAQUE : PFLAG_DIRTY;
+
+            if (child.mLayerType != LAYER_TYPE_NONE) {
+                mPrivateFlags |= PFLAG_INVALIDATED;
+                mPrivateFlags &= ~PFLAG_DRAWING_CACHE_VALID;
+            }
+
+            final int[] location = attachInfo.mInvalidateChildLocation;
+            location[CHILD_LEFT_INDEX] = child.mLeft;
+            location[CHILD_TOP_INDEX] = child.mTop;
+            if (!childMatrix.isIdentity() ||
+                    (mGroupFlags & ViewGroup.FLAG_SUPPORT_STATIC_TRANSFORMATIONS) != 0) {
+                RectF boundingRect = attachInfo.mTmpTransformRect;
+                boundingRect.set(dirty);
+                Matrix transformMatrix;
+                if ((mGroupFlags & ViewGroup.FLAG_SUPPORT_STATIC_TRANSFORMATIONS) != 0) {
+                    Transformation t = attachInfo.mTmpTransformation;
+                    boolean transformed = getChildStaticTransformation(child, t);
+                    if (transformed) {
+                        transformMatrix = attachInfo.mTmpMatrix;
+                        transformMatrix.set(t.getMatrix());
+                        if (!childMatrix.isIdentity()) {
+                            transformMatrix.preConcat(childMatrix);
+                        }
+                    } else {
+                        transformMatrix = childMatrix;
+                    }
+                } else {
+                    transformMatrix = childMatrix;
+                }
+                transformMatrix.mapRect(boundingRect);
+                dirty.set((int) Math.floor(boundingRect.left),
+                        (int) Math.floor(boundingRect.top),
+                        (int) Math.ceil(boundingRect.right),
+                        (int) Math.ceil(boundingRect.bottom));
+            }
+
+            do {
+                View view = null;
+                if (parent instanceof View) {
+                    view = (View) parent;
+                }
+
+                if (drawAnimation) {
+                    if (view != null) {
+                        view.mPrivateFlags |= PFLAG_DRAW_ANIMATION;
+                    } else if (parent instanceof ViewRootImpl) {
+                        ((ViewRootImpl) parent).mIsAnimating = true;
+                    }
+                }
+
+                // If the parent is dirty opaque or not dirty, mark it dirty with the opaque
+                // flag coming from the child that initiated the invalidate
+                if (view != null) {
+                    if ((view.mViewFlags & FADING_EDGE_MASK) != 0 &&
+                            view.getSolidColor() == 0) {
+                        opaqueFlag = PFLAG_DIRTY;
+                    }
+                    if ((view.mPrivateFlags & PFLAG_DIRTY_MASK) != PFLAG_DIRTY) {
+                        view.mPrivateFlags = (view.mPrivateFlags & ~PFLAG_DIRTY_MASK) | opaqueFlag;
+                    }
+                }
+
+                parent = parent.invalidateChildInParent(location, dirty);
+                if (view != null) {
+                    // Account for transform on current parent
+                    Matrix m = view.getMatrix();
+                    if (!m.isIdentity()) {
+                        RectF boundingRect = attachInfo.mTmpTransformRect;
+                        boundingRect.set(dirty);
+                        m.mapRect(boundingRect);
+                        dirty.set((int) Math.floor(boundingRect.left),
+                                (int) Math.floor(boundingRect.top),
+                                (int) Math.ceil(boundingRect.right),
+                                (int) Math.ceil(boundingRect.bottom));
+                    }
+                }
+            } while (parent != null);
+        }
+    }
+```
+
