@@ -150,3 +150,59 @@ View是否需要重绘，接着为该View设置标记位，然后把需要重绘
     }
 ```
 可以看到，在该方法内部，先设置当前视图的标记位，接着有一个do...while...循环，该循环的作用主要是不断向上回溯父容器，求得父容器和子View需要重绘的区域的并集(dirty) <br>
+
+```java
+@Override
+    public ViewParent invalidateChildInParent(int[] location, Rect dirty) {
+        checkThread();
+        if (DEBUG_DRAW) Log.v(mTag, "Invalidate child: " + dirty);
+
+        if (dirty == null) {
+            invalidate();
+            return null;
+        } else if (dirty.isEmpty() && !mIsAnimating) {
+            return null;
+        }
+
+        if (mCurScrollY != 0 || mTranslator != null) {
+            mTempRect.set(dirty);
+            dirty = mTempRect;
+            if (mCurScrollY != 0) {
+                dirty.offset(0, -mCurScrollY);
+            }
+            if (mTranslator != null) {
+                mTranslator.translateRectInAppWindowToScreen(dirty);
+            }
+            if (mAttachInfo.mScalingRequired) {
+                dirty.inset(-1, -1);
+            }
+        }
+
+        invalidateRectOnScreen(dirty);
+
+        return null;
+    }
+    
+    private void invalidateRectOnScreen(Rect dirty) {
+        final Rect localDirty = mDirty;
+        if (!localDirty.isEmpty() && !localDirty.contains(dirty)) {
+            mAttachInfo.mSetIgnoreDirtyState = true;
+            mAttachInfo.mIgnoreDirtyState = true;
+        }
+
+        // Add the new dirty rect to the current one
+        localDirty.union(dirty.left, dirty.top, dirty.right, dirty.bottom);
+        // Intersect with the bounds of the window to skip
+        // updates that lie outside of the visible region
+        final float appScale = mAttachInfo.mApplicationScale;
+        final boolean intersected = localDirty.intersect(0, 0,
+                (int) (mWidth * appScale + 0.5f), (int) (mHeight * appScale + 0.5f));
+        if (!intersected) {
+            localDirty.setEmpty();
+        }
+        if (!mWillDrawSoon && (intersected || mIsAnimating)) {
+            scheduleTraversals();
+        }
+    }
+```
+
