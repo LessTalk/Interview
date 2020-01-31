@@ -4,9 +4,6 @@
 AndroidNode <br>
 https://github.com/LessTalk/Note/blob/master/AndroidNode.md <br>
 
-RxNode <br>
-https://github.com/LessTalk/Note/blob/master/RxjavaNode.md <br>
-
 GitNode <br>
 https://github.com/LessTalk/Note/blob/master/GitNode.md <br>
 
