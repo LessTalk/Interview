@@ -1,7 +1,5 @@
 # Note
 
-Common Note <br>
-01 : resume-http://deercv.com/ <br>
 
 AndroidNode <br>
 https://github.com/LessTalk/Note/blob/master/AndroidNode.md <br>
